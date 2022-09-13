@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var colorDisplay = [ColorDisplay(color: .green), ColorDisplay(color: .red), ColorDisplay(color: .yellow), ColorDisplay(color: .blue)]
     var body: some View {
         VStack {
             Text("Simon")
                 .font(.title)
                 .multilineTextAlignment(.center)
-            .preferredColorScheme(.dark)
+                .preferredColorScheme(.dark)
             Spacer()
         }
     }
