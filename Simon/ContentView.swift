@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var colorDisplay = [ColorDisplay(color: .green), ColorDisplay(color: .red), ColorDisplay(color: .yellow), ColorDisplay(color: .blue)]
+    @State private var flash = [false, false, false, false]
     var body: some View {
         VStack {
             Text("Simon")
@@ -20,12 +21,16 @@ struct ContentView: View {
             
             HStack {
                 colorDisplay[0]
+                    .opacity(flash[0] ? 1 : 0.4)
                 colorDisplay[1]
-            } .multilineTextAlignment(.center)
+                    .opacity(flash[1] ? 1 : 0.4)
+            }
             HStack {
                 colorDisplay[2]
+                    .opacity(flash[2] ? 1 : 0.4)
                 colorDisplay[3]
-            } .multilineTextAlignment(.center)
+                    .opacity(flash[3] ? 1 : 0.4)
+            }
             Spacer()
         }
     }
