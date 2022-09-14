@@ -13,8 +13,19 @@ struct ContentView: View {
         VStack {
             Text("Simon")
                 .font(.title)
+                .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .preferredColorScheme(.dark)
+            Spacer()
+            
+            HStack {
+                colorDisplay[0]
+                colorDisplay[1]
+            } .multilineTextAlignment(.center)
+            HStack {
+                colorDisplay[2]
+                colorDisplay[3]
+            } .multilineTextAlignment(.center)
             Spacer()
         }
     }
