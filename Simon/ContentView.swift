@@ -13,6 +13,7 @@ struct ContentView: View {
     @State private var timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     @State private var index = 0
     @State private var sequence = [Int.random(in: 0...3)]
+    @State private var rounds = 1...1000
     var body: some View {
         VStack {
             Text("Simon")
@@ -28,7 +29,6 @@ struct ContentView: View {
                     else  {
                         index = 0
                         sequence.append(Int.random(in: 0...3))
-                        
                     }
                 }
             Spacer()
