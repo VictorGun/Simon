@@ -14,9 +14,14 @@ struct ContentView: View {
     @State private var index = 0
     @State private var sequence = [Int.random(in: 0...3)]
     @State private var rounds = 1...1000
+    @State private var tapGet = -1
+    @State private var userPlaying = false
+    @State private var hasLost = false
+    @State private var SequenceLocation = 0
+    @State private var titleText = "Simon"
     var body: some View {
         VStack {
-            Text("Simon")
+            Text(titleText)
                 .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
@@ -27,8 +32,24 @@ struct ContentView: View {
                         index += 1
                     }
                     else  {
-                        index = 0
-                        sequence.append(Int.random(in: 0...3))
+                        Task {
+                            userPlaying = true
+                            timer.upstream.connect().cancel()
+                            await userInput()
+                            index = 0
+                            sequence.append(Int.random(in: 0...3))
+                            timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+                        }
+                    }
+                }
+                
+            Text("\(sequence.count)")
+                .onChange(of: tapGet) { theValue in
+                    if(userPlaying) {
+                        if(sequence[SequenceLocation] != theValue) {
+                            hasLost = true
+                        }
+                        SequenceLocation += 1
                     }
                 }
             Spacer()
@@ -38,11 +59,13 @@ struct ContentView: View {
                     .opacity(flash[0] ? 1 : 0.4)
                     .onTapGesture {
                         flashColorDisplay(index: 0)
+                        tapGet = 0
                     }
                 colorDisplay[1]
                     .opacity(flash[1] ? 1 : 0.4)
                     .onTapGesture {
                         flashColorDisplay(index: 1)
+                        tapGet = 1
                     }
             }
             HStack {
@@ -50,15 +73,27 @@ struct ContentView: View {
                     .opacity(flash[2] ? 1 : 0.4)
                     .onTapGesture {
                         flashColorDisplay(index: 2)
+                        tapGet = 2
                     }
                 colorDisplay[3]
                     .opacity(flash[3] ? 1 : 0.4)
                     .onTapGesture {
                         flashColorDisplay(index: 3)
+                        tapGet = 3
                     }
             }
             Spacer()
         }
+        
+    }
+    //I hate async, so I'm gonna do it.
+    func userInput() async {
+        let playerTime = 1000000000 * sequence.count
+        try? await Task.sleep(nanoseconds: UInt64(playerTime))
+        if(hasLost || SequenceLocation != sequence.count - 1) {
+            titleText = "You Lost(The Game)!"
+        }
+        
         
     }
     func flashColorDisplay(index: Int) {
