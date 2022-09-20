@@ -46,11 +46,13 @@ struct ContentView: View {
             Text("\(sequence.count)")
                 .onChange(of: tapGet) { theValue in
                     if(userPlaying) {
-                        if(sequenceLocation < sequence.count) {
-                            if(sequence[sequenceLocation] != theValue) {
-                                hasLost = true
+                        if(sequenceLocation <= sequence.count) {
+                            if(sequenceLocation < sequence.count) {
+                                if(sequence[sequenceLocation] != theValue) {
+                                    hasLost = true
+                                }
+                                sequenceLocation += 1
                             }
-                            sequenceLocation += 1
                         }
                     }
                 }
