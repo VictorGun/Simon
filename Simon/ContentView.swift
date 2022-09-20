@@ -17,7 +17,7 @@ struct ContentView: View {
     @State private var tapGet = -1
     @State private var userPlaying = false
     @State private var hasLost = false
-    @State private var SequenceLocation = 0
+    @State private var sequenceLocation = 0
     @State private var titleText = "Simon"
     var body: some View {
         VStack {
@@ -46,10 +46,12 @@ struct ContentView: View {
             Text("\(sequence.count)")
                 .onChange(of: tapGet) { theValue in
                     if(userPlaying) {
-                        if(sequence[SequenceLocation] != theValue) {
-                            hasLost = true
+                        if(sequenceLocation < sequence.count) {
+                            if(sequence[sequenceLocation] != theValue) {
+                                hasLost = true
+                            }
+                            sequenceLocation += 1
                         }
-                        SequenceLocation += 1
                     }
                 }
             Spacer()
@@ -90,7 +92,7 @@ struct ContentView: View {
     func userInput() async {
         let playerTime = 1000000000 * sequence.count
         try? await Task.sleep(nanoseconds: UInt64(playerTime))
-        if(hasLost || SequenceLocation != sequence.count - 1) {
+        if(hasLost || sequenceLocation != sequence.count - 1) {
             titleText = "You Lost(The Game)!"
         }
         
