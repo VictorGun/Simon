@@ -12,7 +12,7 @@ struct ContentView: View {
     @State private var flash = [false, false, false, false]
     @State private var timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
     @State private var index = 0
-    @State private var sequence = [Int.random(in: 0...3)]
+    @State private var sequence = [Int]()
     @State private var rounds = 1...1000
     @State private var tapGet = -1
     @State private var userPlaying = false
@@ -105,19 +105,23 @@ struct ContentView: View {
     func userInput() async {
         titleText = "Start Playing"
         let playerTime = 1000000000
-        let loopCount = 1...sequence.count
-        
-        for _ in loopCount {
-            if(hasLost) {
-                break
-            } else {
-                try? await Task.sleep(nanoseconds: UInt64(playerTime) )
+        if(sequence.count > 0) {
+            let loopCount = 1...sequence.count
+            
+            for _ in loopCount {
+                if(hasLost) {
+                    break
+                } else {
+                    try? await Task.sleep(nanoseconds: UInt64(playerTime) )
+                }
             }
         }
+            
+        
         userPlaying = false
         
         if(hasLost || sequenceLocation != sequence.count - 1) {
-            titleText = "You Lost(The Game)!"
+            titleText = "You Lost"
             
         } else {
             timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
