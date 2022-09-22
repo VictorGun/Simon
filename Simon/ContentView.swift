@@ -104,8 +104,16 @@ struct ContentView: View {
     //I hate async, so I'm gonna do it.
     func userInput() async {
         titleText = "Start Playing"
-        let playerTime = 1000000000 * sequence.count
-        try? await Task.sleep(nanoseconds: UInt64(playerTime))
+        let playerTime = 1000000000
+        let loopCount = 1...sequence.count
+        
+        for _ in loopCount {
+            if(hasLost) {
+                break
+            } else {
+                try? await Task.sleep(nanoseconds: UInt64(playerTime) )
+            }
+        }
         userPlaying = false
         
         if(hasLost || sequenceLocation != sequence.count - 1) {
