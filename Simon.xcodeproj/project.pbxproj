@@ -12,6 +12,7 @@
 		402B0DF828CF7E8C003B47C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 402B0DF728CF7E8C003B47C8 /* Assets.xcassets */; };
 		402B0DFB28CF7E8C003B47C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 402B0DFA28CF7E8C003B47C8 /* Preview Assets.xcassets */; };
 		6E044F2A28D3729C003C929D /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E044F2928D3729C003C929D /* TitleView.swift */; };
+		6E6C61A428E1F0D50048590A /* InstructionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E6C61A328E1F0D50048590A /* InstructionsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		402B0DF728CF7E8C003B47C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		402B0DFA28CF7E8C003B47C8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		6E044F2928D3729C003C929D /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		6E6C61A328E1F0D50048590A /* InstructionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 			children = (
 				402B0DF328CF7E8A003B47C8 /* SimonApp.swift */,
 				6E044F2928D3729C003C929D /* TitleView.swift */,
+				6E6C61A328E1F0D50048590A /* InstructionsView.swift */,
 				402B0DF528CF7E8A003B47C8 /* ContentView.swift */,
 				402B0DF728CF7E8C003B47C8 /* Assets.xcassets */,
 				402B0DF928CF7E8C003B47C8 /* Preview Content */,
@@ -141,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				402B0DF628CF7E8A003B47C8 /* ContentView.swift in Sources */,
+				6E6C61A428E1F0D50048590A /* InstructionsView.swift in Sources */,
 				402B0DF428CF7E8A003B47C8 /* SimonApp.swift in Sources */,
 				6E044F2A28D3729C003C929D /* TitleView.swift in Sources */,
 			);

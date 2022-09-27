@@ -24,11 +24,13 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            
             Text(titleText)
                 .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .preferredColorScheme(.dark)
+            //game loop, this part is where simon is giving you the sequence
                 .onReceive(timer) { _ in
                     if index < sequence.count {
                         flashColorDisplay(index: sequence[index])
@@ -86,10 +88,32 @@ struct ContentView: View {
                     }
             }
             Spacer()
+            
+            
+            
+            Button("Restart") {
+                timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
+                index = 0
+                sequence = [Int]()
+                rounds = 1...1000
+                tapGet = -1
+                userPlaying = false
+                hasLost = false
+                sequenceLocation = -1
+                titleText = "Simon"
+            }.font(.title3)
+                .foregroundColor(.black)
+                .padding(5)
+                .background(.gray)
+                .cornerRadius(5.0)
+            
+            
+            Spacer()
         }
         
     }
     //gonna just call it a bunch
+    //actually does stuff when you hit buttons
     func buttonGo() {
         if(userPlaying) {
             sequenceLocation += 1
@@ -102,6 +126,8 @@ struct ContentView: View {
     }
     
     //I hate async, so I'm gonna do it.
+    //player just like hits button in the sequence
+    //this might be a bit too big of a function, might wanna split it
     func userInput() async {
         titleText = "Start Playing"
         let playerTime = 1000000000
@@ -116,7 +142,7 @@ struct ContentView: View {
                 }
             }
         }
-            
+        
         
         userPlaying = false
         
