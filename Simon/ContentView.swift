@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 struct ContentView: View {
     @State private var colorDisplay = [ColorDisplay(color: .green), ColorDisplay(color: .red), ColorDisplay(color: .yellow), ColorDisplay(color: .blue)]
@@ -19,8 +20,7 @@ struct ContentView: View {
     @State private var hasLost = false
     @State private var sequenceLocation = -1
     @State private var titleText = "Simon"
-    
-    
+    @State private var audioPlayer: AVAudioPlayer!
     
     var body: some View {
         VStack {
@@ -112,6 +112,7 @@ struct ContentView: View {
         }
         
     }
+
     //gonna just call it a bunch
     //actually does stuff when you hit buttons
     func buttonGo() {
@@ -124,6 +125,21 @@ struct ContentView: View {
             }
         }
     }
+    func playSounds(_ soundFileName : String) {
+            guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: nil) else {
+                fatalError("Unable to find \(soundFileName) in bundle")
+            }
+
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
+            } catch {
+                print(error.localizedDescription)
+            }
+            audioPlayer.play()
+        }
+    
+    //USE OF THE PLAY SOUNDS playSounds("file.(mp3)(wav)(etc) (remove brackets")
+    
     
     //I hate async, so I'm gonna do it.
     //player just like hits button in the sequence
