@@ -11,6 +11,7 @@ struct TitleView: View {
     var body: some View {
         NavigationView {
             VStack {
+                Spacer()
                 Text("SIMON:" )
                     .padding(1)
                     .font(.title)
@@ -22,6 +23,12 @@ struct TitleView: View {
                 NavigationLink(destination: ContentView()) {
                     Label("PLAY", systemImage: "arrowtriangle.right.fill")
                 }
+                Spacer()
+                NavigationLink(destination: InstructionsView()) {
+                    Text("Instructions")
+                }.padding(20).font(.title3)
+                
+                
             }
         }
     }

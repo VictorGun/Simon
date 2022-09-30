@@ -52,7 +52,10 @@ struct ContentView: View {
                     }
                 }
             
-            Text("sequence length: \(sequence.count) | position in sequence: \(sequenceLocation)")
+            Text("Current Simon sequence length: \(sequence.count)")
+            if(sequenceLocation >= 0) {
+                Text("Current position in the sequence: \(sequenceLocation)")
+            }
             Spacer()
             
             HStack {
