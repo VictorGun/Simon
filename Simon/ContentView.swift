@@ -128,8 +128,9 @@ struct ContentView: View {
             }
         }
     }
-    func playSound(sound : String) {
-        //  code goes here //
+    mutating func playSound(sound : String) {
+        //turned into mutating func errors with func
+       
         let url = Bundle.main.url(forResource: sound, withExtension: "mp3")
         
         guard url != nil else {
