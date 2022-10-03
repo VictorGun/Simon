@@ -20,7 +20,7 @@ struct ContentView: View {
     @State private var hasLost = false
     @State private var sequenceLocation = -1
     @State private var titleText = "Simon"
-    @State private var audioPlayer: AVAudioPlayer!
+    var player: AVAudioPlayer!
     
     var body: some View {
         VStack {
