@@ -128,18 +128,23 @@ struct ContentView: View {
             }
         }
     }
-    func playSounds(_ soundFileName : String) {
-            guard let soundURL = Bundle.main.url(forResource: soundFileName, withExtension: nil) else {
-                fatalError("Unable to find \(soundFileName) in bundle")
-            }
-
-            do {
-                audioPlayer = try AVAudioPlayer(contentsOf: soundURL)
-            } catch {
-                print(error.localizedDescription)
-            }
-            audioPlayer.play()
+    func playSound(sound : String) {
+        //  code goes here //
+        let url = Bundle.main.url(forResource: sound, withExtension: "mp3")
+        
+        guard url != nil else {
+            return
         }
+        
+        do {
+            player = try AVAudioPlayer(contentsOf: url!)
+            player?.play()
+        } catch {
+            print("\(error)")
+        }
+        
+        // --------------- //
+    }
     
     //USE OF THE PLAY SOUNDS playSounds("file.(mp3)(wav)(etc) (remove brackets")
     
