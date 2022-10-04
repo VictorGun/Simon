@@ -20,7 +20,7 @@ struct ContentView: View {
     @State private var hasLost = false
     @State private var sequenceLocation = -1
     @State private var titleText = "Simon"
-    var player: AVAudioPlayer!
+    @State private var player: AVAudioPlayer!
     
     var body: some View {
         VStack {
@@ -32,6 +32,9 @@ struct ContentView: View {
                 .preferredColorScheme(.dark)
             //game loop, this part is where simon is giving you the sequence
                 .onReceive(timer) { _ in
+                    if(sequence.count == 0) {
+                        playSounds(sound: "Start")
+                    }
                     if index < sequence.count {
                         flashColorDisplay(index: sequence[index])
                         index += 1
@@ -42,10 +45,11 @@ struct ContentView: View {
                             timer.upstream.connect().cancel()
                             await userInput()
                             if(hasLost) {
-                                
+                                playSounds(sound: "Lose")
                             } else {
                                 index = 0
                                 sequence.append(Int.random(in: 0...3))
+                                
                             }
                             
                         }
@@ -54,7 +58,10 @@ struct ContentView: View {
             
             Text("Current Simon sequence length: \(sequence.count)")
             if(sequenceLocation >= 0) {
-                Text("Current position in the sequence: \(sequenceLocation)")
+                Text("Current position in the sequence: \(sequenceLocation + 1)")
+            }
+            else {
+                Text("    ")
             }
             Spacer()
             
@@ -65,6 +72,7 @@ struct ContentView: View {
                         flashColorDisplay(index: 0)
                         tapGet = 0
                         buttonGo()
+                        playSounds(sound: "1")
                     }
                 colorDisplay[1]
                     .opacity(flash[1] ? 1 : 0.4)
@@ -72,6 +80,7 @@ struct ContentView: View {
                         flashColorDisplay(index: 1)
                         tapGet = 1
                         buttonGo()
+                        playSounds(sound: "2")
                     }
             }
             HStack {
@@ -81,6 +90,7 @@ struct ContentView: View {
                         flashColorDisplay(index: 2)
                         tapGet = 2
                         buttonGo()
+                        playSounds(sound: "3")
                     }
                 colorDisplay[3]
                     .opacity(flash[3] ? 1 : 0.4)
@@ -88,9 +98,11 @@ struct ContentView: View {
                         flashColorDisplay(index: 3)
                         tapGet = 3
                         buttonGo()
+                        playSounds(sound: "0")
                     }
             }
             Spacer()
+            
             
             
             
@@ -104,7 +116,7 @@ struct ContentView: View {
                 hasLost = false
                 sequenceLocation = -1
                 titleText = "Simon"
-            }.font(.title3)
+            }.font(.title)
                 .foregroundColor(.black)
                 .padding(5)
                 .background(.gray)
@@ -115,7 +127,7 @@ struct ContentView: View {
         }
         
     }
-
+    
     //gonna just call it a bunch
     //actually does stuff when you hit buttons
     func buttonGo() {
@@ -128,26 +140,21 @@ struct ContentView: View {
             }
         }
     }
-    mutating func playSound(sound : String) {
-        //turned into mutating func errors with func
-       
-        let url = Bundle.main.url(forResource: sound, withExtension: "mp3")
-        
-        guard url != nil else {
-            return
+    //stealing the thing from the website
+    func playSounds(sound: String) {
+        if let asset = NSDataAsset(name: sound){
+            do {
+                // Use NSDataAsset's data property to access the audio file stored in Sound.
+                player = try AVAudioPlayer(data:asset.data, fileTypeHint:"wav")
+                // Play the above sound file.
+                player?.play()
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
         }
-        
-        do {
-            player = try AVAudioPlayer(contentsOf: url!)
-            player?.play()
-        } catch {
-            print("\(error)")
-        }
-        
-        // --------------- //
     }
     
-    //USE OF THE PLAY SOUNDS playSounds("file.(mp3)(wav)(etc) (remove brackets")
+    //USE OF THE PLAY SOUNDS playSounds("file(no extension)(remove brackets")
     
     
     //I hate async, so I'm gonna do it.

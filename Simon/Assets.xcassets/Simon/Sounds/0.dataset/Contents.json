@@ -2,7 +2,8 @@
   "data" : [
     {
       "filename" : "0.wav",
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "universal-type-identifier" : "com.microsoft.waveform-audio"
     }
   ],
   "info" : {
