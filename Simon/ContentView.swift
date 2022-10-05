@@ -34,6 +34,8 @@ struct ContentView: View {
                 .onReceive(timer) { _ in
                     if(sequence.count == 0) {
                         playSounds(sound: "Start")
+                        index = 0
+                        sequence.append(Int.random(in: 0...3))
                     }
                     if index < sequence.count {
                         flashColorDisplay(index: sequence[index])
@@ -41,6 +43,7 @@ struct ContentView: View {
                     }
                     else  {
                         Task {
+                            
                             userPlaying = true
                             timer.upstream.connect().cancel()
                             await userInput()
@@ -56,9 +59,9 @@ struct ContentView: View {
                     }
                 }
             
-            Text("Current Simon sequence length: \(sequence.count)")
+            //Text("Current Simon sequence length: \(sequence.count)")
             if(sequenceLocation >= 0) {
-                Text("Current position in the sequence: \(sequenceLocation + 1)")
+                Text("Current score: \(sequenceLocation + 1)")
             }
             else {
                 Text("    ")
@@ -72,7 +75,7 @@ struct ContentView: View {
                         flashColorDisplay(index: 0)
                         tapGet = 0
                         buttonGo()
-                        playSounds(sound: "1")
+                        
                     }
                 colorDisplay[1]
                     .opacity(flash[1] ? 1 : 0.4)
@@ -80,7 +83,6 @@ struct ContentView: View {
                         flashColorDisplay(index: 1)
                         tapGet = 1
                         buttonGo()
-                        playSounds(sound: "2")
                     }
             }
             HStack {
@@ -90,7 +92,7 @@ struct ContentView: View {
                         flashColorDisplay(index: 2)
                         tapGet = 2
                         buttonGo()
-                        playSounds(sound: "3")
+
                     }
                 colorDisplay[3]
                     .opacity(flash[3] ? 1 : 0.4)
@@ -98,7 +100,6 @@ struct ContentView: View {
                         flashColorDisplay(index: 3)
                         tapGet = 3
                         buttonGo()
-                        playSounds(sound: "0")
                     }
             }
             Spacer()
@@ -132,7 +133,10 @@ struct ContentView: View {
     //actually does stuff when you hit buttons
     func buttonGo() {
         if(userPlaying) {
-            sequenceLocation += 1
+            if(sequenceLocation != sequence.count) {
+                sequenceLocation += 1
+            }
+            
             if(sequenceLocation < sequence.count) {
                 if(sequence[sequenceLocation] != tapGet) {
                     hasLost = true
@@ -161,8 +165,9 @@ struct ContentView: View {
     //player just like hits button in the sequence
     //this might be a bit too big of a function, might wanna split it
     func userInput() async {
-        titleText = "Start Playing"
         let playerTime = 1000000000
+        try? await Task.sleep(nanoseconds: UInt64(playerTime))
+        titleText = "Start Playing"
         if(sequence.count > 0) {
             let loopCount = 1...sequence.count
             
@@ -178,8 +183,13 @@ struct ContentView: View {
         
         userPlaying = false
         
-        if(hasLost || sequenceLocation != sequence.count - 1) {
+        hasLost = (sequenceLocation != sequence.count - 1)
+            
+        
+        
+        if(hasLost) {
             titleText = "You Lost"
+            try? await Task.sleep(nanoseconds: UInt64(playerTime))
             
         } else {
             timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
@@ -193,6 +203,8 @@ struct ContentView: View {
         
     }
     func flashColorDisplay(index: Int) {
+        playSounds(sound: String((index + 1) % 4))
+
         flash[index].toggle()
         withAnimation(.easeInOut(duration: 0.5)) {
             flash[index].toggle()
