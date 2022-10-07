@@ -18,7 +18,7 @@ struct ContentView: View {
     @State private var tapGet = -1
     @State private var userPlaying = false
     @State private var hasLost = false
-    @State private var sequenceLocation = -1
+    @State private var sequenceLocation = 0
     @State private var titleText = "Simon"
     @State private var player: AVAudioPlayer!
     
@@ -47,12 +47,9 @@ struct ContentView: View {
                             userPlaying = true
                             timer.upstream.connect().cancel()
                             await userInput()
-                            if(hasLost) {
-                                playSounds(sound: "Lose")
-                            } else {
+                            if(!hasLost) {
                                 index = 0
                                 sequence.append(Int.random(in: 0...3))
-                                
                             }
                             
                         }
@@ -133,13 +130,14 @@ struct ContentView: View {
     //actually does stuff when you hit buttons
     func buttonGo() {
         if(userPlaying) {
-            if(sequenceLocation != sequence.count) {
+            if(sequenceLocation < sequence.count) {
                 sequenceLocation += 1
             }
             
             if(sequenceLocation < sequence.count) {
                 if(sequence[sequenceLocation] != tapGet) {
                     hasLost = true
+                    userPlaying = false
                 }
             }
         }
@@ -183,12 +181,13 @@ struct ContentView: View {
         
         userPlaying = false
         
-        hasLost = (sequenceLocation != sequence.count - 1)
+        hasLost = hasLost || (sequenceLocation != sequence.count - 1)
             
         
         
         if(hasLost) {
             titleText = "You Lost"
+            playSounds(sound: "Lose")
             try? await Task.sleep(nanoseconds: UInt64(playerTime))
             
         } else {
