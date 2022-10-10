@@ -21,6 +21,7 @@ struct ContentView: View {
     @State private var sequenceLocation = 0
     @State private var titleText = "Simon"
     @State private var player: AVAudioPlayer!
+   
     
     var body: some View {
         VStack {
@@ -57,6 +58,9 @@ struct ContentView: View {
                 }
             
             //Text("Current Simon sequence length: \(sequence.count)")
+            Text("\(sequence.count)")
+            // score based on rounds
+            
             if(sequenceLocation >= 0) {
                 Text("Current score: \(sequenceLocation + 1)")
                     .font(Font.custom("impact", size: 14))
