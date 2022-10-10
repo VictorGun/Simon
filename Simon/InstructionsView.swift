@@ -37,6 +37,7 @@ Continue to repeat Simon for as long as you can!
     }
 }
 
+//new view
 struct VictoryView: View {
     var body: some View {
         VStack {
