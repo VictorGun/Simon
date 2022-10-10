@@ -14,20 +14,20 @@ struct TitleView: View {
                 Spacer()
                 Text("SIMON:" )
                     .padding(1)
-                    .font(.title)
+                    .font(Font.custom("impact", size: 40))
                     .preferredColorScheme(.dark)
                 Text("A game of short term memory and flashing lights.")
                     .padding(3)
-                    .font(.subheadline)
+                    .font(Font.custom("impact", size: 18))
                 
                 NavigationLink(destination: ContentView()) {
                     Label("PLAY", systemImage: "arrowtriangle.right.fill")
+                        .font(Font.custom("impact", size: 20))
                 }
                 Spacer()
                 NavigationLink(destination: InstructionsView()) {
                     Text("Instructions")
-                }.padding(20).font(.title3)
-                
+                }.padding(20).font(Font.custom("impact", size: 20))
                 
             }
         }

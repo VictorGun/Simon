@@ -43,9 +43,9 @@ struct VictoryView: View {
             Text("""
 • If you fail to complete the sequence in the correct order or within the time limit, the Buzzer will sound and the game will end.
 
-• If you want, you can see your score on the Score screen. TODO
+• If you want, you can see your score above the play area. It will update in real time!
 
-• Simon records your High Score so you can play to beat it. TODO
+• Simon records your High Score during a session so you can play to beat it.
 
 """)
         }

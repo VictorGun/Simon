@@ -26,7 +26,7 @@ struct ContentView: View {
         VStack {
             
             Text(titleText)
-                .font(.title)
+                .font(Font.custom("impact", size: 40))
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .preferredColorScheme(.dark)
@@ -59,6 +59,7 @@ struct ContentView: View {
             //Text("Current Simon sequence length: \(sequence.count)")
             if(sequenceLocation >= 0) {
                 Text("Current score: \(sequenceLocation + 1)")
+                    .font(Font.custom("impact", size: 14))
             }
             else {
                 Text("    ")
@@ -114,7 +115,7 @@ struct ContentView: View {
                 hasLost = false
                 sequenceLocation = -1
                 titleText = "Simon"
-            }.font(.title)
+            }.font(Font.custom("impact", size: 30))
                 .foregroundColor(.black)
                 .padding(5)
                 .background(.gray)
