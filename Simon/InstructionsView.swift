@@ -11,7 +11,8 @@ struct InstructionsView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("HOW TO PLAY").font(.title)
+            Text("HOW TO PLAY")
+                .font(Font.custom("impact", size: 50))
             Text("""
 • Simon will give the first signal. (One of the colored buttons will light up, accompanied by a tone.)
 
@@ -24,7 +25,7 @@ struct InstructionsView: View {
 • Simon will continue to play the sequence and add one.
 
 Continue to repeat Simon for as long as you can!
-""")
+""") .font(Font.custom("impact", size: 18))
             .preferredColorScheme(.dark)
             .padding(5)
             Spacer()
@@ -39,7 +40,9 @@ Continue to repeat Simon for as long as you can!
 struct VictoryView: View {
     var body: some View {
         VStack {
-            Text("VICTORY: INVICTUS").font(.title).padding(20)
+            Text("VICTORY: INVICTUS")
+                .font(Font.custom("imapct", size: 18))
+                .padding(20)
             Text("""
 • If you fail to complete the sequence in the correct order or within the time limit, the Buzzer will sound and the game will end.
 
@@ -48,6 +51,7 @@ struct VictoryView: View {
 • Simon records your High Score during a session so you can play to beat it.
 
 """)
+            .font(Font.custom("impact", size: 18))
         }
     }
 }
