@@ -58,14 +58,15 @@ struct ContentView: View {
                 }
             
             //Text("Current Simon sequence length: \(sequence.count)")
-            Text("\(sequence.count)")
+            
             // score based on rounds
-            padding()
             if(sequenceLocation >= 0) {
+                Text("High Score: \(sequence.count - 1)").font(Font.custom("impact", size: 14))
                 Text("Current score: \(sequenceLocation + 1)")
                     .font(Font.custom("impact", size: 14))
             }
             else {
+                Text("    ")
                 Text("    ")
             }
             Spacer()
